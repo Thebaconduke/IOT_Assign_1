@@ -4,44 +4,55 @@
 		<script src="Chart.js"></script>
 	</head>
 	<body>
-	<div class="chart-container" style="position: relative; height:8vh; width:16vw">
+	<div class="chart-container" style="position: relative; height:20vh; width:40vw">
             <canvas id="myChart" width="100" height="100"></canvas>
         </div>
-        
-        <script>
-            var ctx = document.getElementById("myChart");
-            var testData = [1, 14, 13, 15, 12, 13]
-            var testLabels = ["10:30", "11:00", "11:30", "12:00", "12:30", "13:00"]
-            var lowestPoint = Math.min(...testData)-2
-            var highestPoint = Math.max(...testData)+2
 
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: testLabels,
-                    datasets: [{
-                        label: 'Temp',
-                        data: testData,
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.2)',
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                min: lowestPoint,
-                                max: highestPoint
-                            }
-                        }]
-                    }
-                }
-            });
-        </script>
+		<script>
+			var ctx = document.getElementById("myChart");
+			var tempData = [10, 14, 13, 15, 12, 13]
+			var humidityData = [8, 19, 2, 17, 18, 4]
+			var testLabels = ["10:30", "11:00", "11:30", "12:00", "12:30", "13:00"]
+			var lowestPoint = Math.min(...humidityData,...tempData)-2
+			var highestPoint = Math.max(...humidityData,...tempData)+2
+
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: testLabels,
+					datasets: [{
+						label: 'Temp',
+						data: tempData,
+						backgroundColor: [
+							'rgba(0, 0, 0, 0.0)'
+						],
+						borderColor: [
+							'rgba(54, 162, 235, 1)',
+						],
+						borderWidth: 1
+					},{
+						label: 'Humidity',
+						data: humidityData,
+						backgroundColor: [
+							'rgba(0, 0, 0, 0.0)'
+						],
+						borderColor: [
+							'rgba(252, 0, 0, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								min: lowestPoint,
+								max: highestPoint
+							}
+						}]
+					}
+				}
+			});
+		</script>
 	</body>
 </html>
