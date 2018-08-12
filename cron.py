@@ -6,7 +6,7 @@ cron = CronTab(user='pi')
 cron.remove_all()
 
 #add job
-job = cron.new(command='/home/pi/A1_proto/maintest.py')
+job = cron.new(command='/home/pi/A1_proto/main.py')
 
 #settings
 job.hour.every(6)
