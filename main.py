@@ -25,15 +25,14 @@ def push_Bullet(temp):
 		
 # get data from SenseHat sensor
 def getSenseHatData():	
-    sense = SenseHat()
-    temp = sense.get_temperature()
+	sense = SenseHat()
+	temp = sense.get_temperature()
 	hum = sense.get_humidity()
-    temp = temp - ((getCPUtemperature() - temp)/1)
-
-    if temp is not None:
-        temp = round(temp, 1)
+	temp = temp - ((getCPUtemperature() - temp)/1)
+	if temp is not None:
+		temp = round(temp, 1)
 		hum = round(hum,1)
-        logData (temp,hum)
+		logData (temp,hum)
 		push_Bullet(temp)
 
 # log sensor data on database
@@ -56,10 +55,10 @@ def displayData():
 # main function
 def main():
 	createDatabase()
-    for i in range (0,3):
-        getSenseHatData()
-        time.sleep(sampleFreq)
-    displayData()
+	for i in range (0,3):
+		getSenseHatData()
+		time.sleep(sampleFreq)
+	displayData()
 
 # Execute program 
 main()
