@@ -36,8 +36,8 @@ def getSenseHatData():
 		push_Bullet(temp)
 
 # log sensor data on database
-def logData (temp):	
-    conn=sqlite3.connect(dbname)
+def logData (temp,hum):	
+    conn=lite.connect(dbname)
     curs=conn.cursor()
     curs.execute("INSERT INTO SENSEHAT_data values((?), (?), (?))", (datetime.now(), temp,hum,))
     conn.commit()
@@ -45,7 +45,7 @@ def logData (temp):
 
 # display database data
 def displayData():
-    conn=sqlite3.connect(dbname)
+    conn=lite.connect(dbname)
     curs=conn.cursor()
     print ("\nEntire database contents:\n")
     for row in curs.execute("SELECT * FROM SenseHat_data"):
