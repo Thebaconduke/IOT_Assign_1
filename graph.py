@@ -1,43 +1,48 @@
 from flask import Flask, render_template,g
 import sqlite3
-app = Flask(name)
+from datetime import datetime
+
+app = Flask(__name__)
 DATABASE = 'sensehat.db'
 
 def get_db():
 	db = getattr(g,'_database',None)
 	if db is None:
-		db = g._database = sqlite3.connect[DATABASE]
-		return db
+		db = g._database = sqlite3.connect(DATABASE)
+	return db
 	 
 @app.teardown_appcontext
-def close_connection (exception)
-	db = getattr(g, '_database",None)
-	if db is not None
+def close_connection (exception):
+	db = getattr(g, '_database', None)
+	if db is not None:
 		db.close()
 
-def query_db(query, args = (), one = false):
+@app.route('/js/<path:path>')
+def send_js(path): return send_from_directory('js', path)
+
+def query_db(query, args = (), one = False):
 	cur = get_db().execute (query, args)
 	rv = cur.fetchall()
 	cur.close
-	return (rb[0] if rv else None) if one else rv
+	return (rv[0] if rv else None) if one else rv
 
 @app.route("/")
 def index():
-	timestamp,temp,hum = []
-	for sense in query_db ('SELECT * FROM Senesehat_data'):
-		timestamp.append(sense ['timestamp'])
-		timestamp.append (sense ['temp'] )
-		timestamp.append (sense ['hum'] )
+	timestamp,temp,hum = [],[],[]
+	for sense in query_db ('SELECT * FROM SENSEHAT_data'):
+		timestamp.append(str(sense[0])[:-10])
+		temp.append ( str(sense[1]) )
+		hum.append ( str(sense[2]) )
 
-	templateData = (
+	templateData = {
 	'timestamp' : timestamp,
-	'temp' : temp,
-	'hum' : hum
-	)
-	return render_templates ('Demo_graph.html', **templateData)
+	'temp' : ",".join(temp),
+	'hum' : ",".join (hum)
+	}
+	return render_template('Demo_graph.html', **templateData)
 
-if name == "main":
-	app.run(host='0.0.0.0', port=80 debug=True)
+if __name__ == "__main__":
+   app.run(host='0.0.0.0', port=8080, debug=True)
 
 
 

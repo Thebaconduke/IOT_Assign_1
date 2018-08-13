@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="Chart.js"></script>
+		<meta charset="utf-8">
+		<script src="/static/Chart.js"></script>
 	</head>
 	<body>
 	<div class="chart-container" style="position: relative; height:20vh; width:40vw">
@@ -10,9 +11,9 @@
 
 		<script>
 			var ctx = document.getElementById("myChart");
-			var tempData = [10, 14, 13, 15, 12, 13]
-			var humidityData = [8, 19, 2, 17, 18, 4]
-			var testLabels = ["10:30", "11:00", "11:30", "12:00", "12:30", "13:00"]
+			var tempData = [{{temp}}]
+			var humidityData = [{{hum}}]
+			var testLabels = {{timestamp|tojson}}
 			var lowestPoint = Math.min(...humidityData,...tempData)-2
 			var highestPoint = Math.max(...humidityData,...tempData)+2
 
