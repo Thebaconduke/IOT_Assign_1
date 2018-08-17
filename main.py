@@ -55,9 +55,8 @@ def displayData():
 # main function
 def main():
 	createDatabase()
-	for i in range (0,1):
-		getSenseHatData()
-		time.sleep(sampleFreq)
+	getSenseHatData()
+	time.sleep(sampleFreq)
 	displayData()
 
 # Execute program 
