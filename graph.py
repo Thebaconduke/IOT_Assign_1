@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from flask import Flask, render_template,g
 import sqlite3
 from datetime import datetime
@@ -25,7 +26,7 @@ def query_db(query, args = (), one = False):
 	rv = cur.fetchall()
 	cur.close
 	return (rv[0] if rv else None) if one else rv
-# Select statment which allows us to 
+# Select statment which allows us to view the data on the webpage.
 @app.route("/")
 def index():
 	timestamp,temp,hum = [],[],[]
@@ -39,7 +40,7 @@ def index():
 	'temp' : ",".join(temp),
 	'hum' : ",".join (hum)
 	}
-	return render_template('Demo_graph.html', **templateData)
+	return render_template('Demo_Graph.html', **templateData)
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=8080, debug=True)
