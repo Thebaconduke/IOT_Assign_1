@@ -4,7 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 DATABASE = 'sensehat.db'
-
+#Connect Database
 def get_db():
 	db = getattr(g,'_database',None)
 	if db is None:
@@ -25,7 +25,7 @@ def query_db(query, args = (), one = False):
 	rv = cur.fetchall()
 	cur.close
 	return (rv[0] if rv else None) if one else rv
-
+# Select statment which allows us to 
 @app.route("/")
 def index():
 	timestamp,temp,hum = [],[],[]

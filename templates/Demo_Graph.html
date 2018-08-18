@@ -6,7 +6,7 @@
 	</head>
 	<body>
 	<h1>Sensor Data </h1>
-    <h3> The temperature at {{ timestamp }} is {{ temp }}°C</h3>
+    <h3> The temperature at {{ timestamp[-1] }} is {{ temp [-1] }}°C</h3>
 	<div class="chart-container" style="position: relative; height:20vh; width:40vw">
             <canvas id="myChart" width="100" height="100"></canvas>
         </div>

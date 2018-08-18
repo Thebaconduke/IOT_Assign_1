@@ -12,11 +12,11 @@ def createDatabase():
 	with con: 
 		cur = con.cursor() 
 		cur.execute("CREATE TABLE IF NOT EXISTS SENSEHAT_data(timestamp DATETIME, temp NUMERIC, hum Numeric)")
-
+# Get the Cpu temperature
 def getCPUtemperature():
     res = os.popen('vcgencmd measure_temp').readline()
     return(float(res.replace("temp=","").replace("'C\n","")))
-	
+# If push bullet below 20 degrees activate a pushbullet 	
 def push_Bullet(temp):
     if temp < 20:
         send_data()
