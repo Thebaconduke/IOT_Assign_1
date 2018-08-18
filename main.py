@@ -1,18 +1,19 @@
+#!/usr/bin/env python3
 import os, sys, time
 from pushbullet import send_data
 from datetime import datetime
 from sense_hat import SenseHat
 import sqlite3 as lite
 
-dbname='sensehat.db'
+dbname='/home/pi/assign_1/sensehat.db'
 sampleFreq = 1 # time in seconds
 
 def createDatabase():
-	con = lite.connect('sensehat.db')
+	con = lite.connect('/home/pi/assign_1/sensehat.db')
 	with con: 
 		cur = con.cursor() 
 		cur.execute("CREATE TABLE IF NOT EXISTS SENSEHAT_data(timestamp DATETIME, temp NUMERIC, hum Numeric)")
-# Get the Cpu temperature
+# Get the CPU temperature
 def getCPUtemperature():
     res = os.popen('vcgencmd measure_temp').readline()
     return(float(res.replace("temp=","").replace("'C\n","")))
@@ -23,7 +24,7 @@ def push_Bullet(temp):
     else:
         print("Don't need sweater")
 		
-# get data from SenseHat sensor
+# get Temperature, and humidity data from SenseHat sensor
 def getSenseHatData():	
 	sense = SenseHat()
 	temp = sense.get_temperature()
@@ -43,7 +44,7 @@ def logData (temp,hum):
     conn.commit()
     conn.close()
 
-# display database data
+# SELECT statment to display database data
 def displayData():
     conn=lite.connect(dbname)
     curs=conn.cursor()
@@ -59,5 +60,5 @@ def main():
 	time.sleep(sampleFreq)
 	displayData()
 
-# Execute program 
+# Execute Main (program)
 main()

@@ -8,6 +8,6 @@ cron.remove_all()
 #add job
 job = cron.new(command='/home/pi/A1_proto/main.py')
 
-#settings
-job.hour.every(6)
+#settings which allow the cron to run every hour
+job.hour.every(1)
 cron.write()
