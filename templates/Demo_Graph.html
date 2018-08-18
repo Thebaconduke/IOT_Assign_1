@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="/static/Chart.js"></script>
+	</head>
+	<body>
+	<h1>Sensor Data </h1>
+    <h3> The temperature at {{ timestamp }} is {{ temp }}°C</h3>
+	<div class="chart-container" style="position: relative; height:20vh; width:40vw">
+            <canvas id="myChart" width="100" height="100"></canvas>
+        </div>
+
+		<script>
+			var ctx = document.getElementById("myChart");
+			var tempData = [{{temp}}]
+			var humidityData = [{{hum}}]
+			var testLabels = {{timestamp|tojson}}
+			var lowestPoint = Math.min(...humidityData,...tempData)-2
+			var highestPoint = Math.max(...humidityData,...tempData)+2
+
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: testLabels,
+					datasets: [{
+						label: 'Temp',
+						data: tempData,
+						backgroundColor: [
+							'rgba(0, 0, 0, 0.0)'
+						],
+						borderColor: [
+							'rgba(54, 162, 235, 1)',
+						],
+						borderWidth: 1
+					},{
+						label: 'Humidity',
+						data: humidityData,
+						backgroundColor: [
+							'rgba(0, 0, 0, 0.0)'
+						],
+						borderColor: [
+							'rgba(252, 0, 0, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								min: lowestPoint,
+								max: highestPoint
+							}
+						}]
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
