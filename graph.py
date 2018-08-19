@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 app = Flask(__name__)
-DATABASE = 'sensehat.db'
+DATABASE = '/home/pi/A1_proto/sensehat.db'
 #Connect Database
 def get_db():
 	db = getattr(g,'_database',None)
@@ -26,24 +26,25 @@ def query_db(query, args = (), one = False):
 	rv = cur.fetchall()
 	cur.close
 	return (rv[0] if rv else None) if one else rv
+	
 # Select statment which allows us to view the data on the webpage.
 @app.route("/")
 def index():
 	timestamp,temp,hum = [],[],[]
 	for sense in query_db ('SELECT * FROM SENSEHAT_data'):
-		timestamp.append(str(sense[0])[:-10])
-		temp.append ( str(sense[1]) )
-		hum.append ( str(sense[2]) )
+		timestamp.append(str(sense[1])[:-10])
+		temp.append ( str(sense[2]) )
+		hum.append ( str(sense[3]) )
 
 	templateData = {
 	'timestamp' : timestamp,
-	'temp' : ",".join(temp),
-	'hum' : ",".join (hum)
+	'temp' : temp,
+	'hum' : hum
 	}
-	return render_template('Demo_Graph.html', **templateData)
+	return render_template('Graph.html', **templateData)
 
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port=8080, debug=True)
+   app.run(host='192.168.1.31', port=8080, debug=True)
 
 
 
